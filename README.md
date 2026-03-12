@@ -14,7 +14,7 @@ This is the api for a web app that allows users to analyze their plot of land to
 ### 1. Clone the repository
 
 ```bash
-git clone https...
+git clone https://github.com/Mikkybeardless/site-analysis.git
 ```
 
 ### 2. Install Dependencies
@@ -23,7 +23,17 @@ git clone https...
 npm install
 ```
 
-### 3. Start the Developmet Server
+### 3. Setup Environmental variables
+
+creat a `.env` file or `.env.example` file in the project root directory
+
+```plaintext
+PORT = 8000
+CORS_ORIGINS=http://localhost:3000,http://localhost:8000
+APP_PREFIX=/api/v1
+```
+
+### 4. Start the Developmet Server
 
 ```bash
 npm run start:dev
