@@ -1,0 +1,39 @@
+services:
+  api:
+    build: .
+    image: n
+    container_name: netmarket
+    ports:
+      - '8000:8000'
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
+      - mysql
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: netmarket-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    restart: always
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+  redis:
+    image: redis:7
+    container_name: netmarket-redis
+    command: redis-server --maxmemory-policy noeviction
+    ports:
+      - '6379:6379'
+    restart: always
+
+volumes:
+  mysql_data:

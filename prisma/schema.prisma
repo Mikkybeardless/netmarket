@@ -1,0 +1,50 @@
+
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+
+
+
+model User {
+  id                String        @id @default(uuid())
+  email             String  @unique
+  firstName         String
+  lastName          String
+  password          String  
+  profilePic    String?
+  lastLogin         DateTime?
+   resetToken        String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  isDeleted         Boolean   @default(false)
+  
+  // Relationships
+  roles                   Role[]                   @relation("UsersRoles")
+  shop                    Shop[]
+}
+
+model Shop {
+  id     String        @id @default(uuid())
+  userId String
+  name   String       @unique
+  city   String    
+  state  String
+
+  user     User      @relation(fields: [userId], references: [id])
+}
+
+model Role{
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+   users       User[]       @relation("UsersRoles")
+}
